@@ -18,6 +18,7 @@ Game::Game(JsonHandler &handler)
     , m_currentColumn(0)
     , m_selectedRow(0)
     , m_selectedColumn(0)
+    , m_selected(false)
 {
 }
 
@@ -162,11 +163,14 @@ void Game::handleClick()
 {
     if (m_currentColumn == 0 && m_currentRow == 0) {
         moveExtraCard();
+    } else if ((m_currentRow == 0 && m_currentColumn > 0) || m_currentRow > 0) {
+        handleCardClick();
     }
 }
 
 void Game::moveExtraCard()
 {
+    m_selected = false; // cancel selecting
     string mode = m_handler.getMode();
     short cards = (mode == "easy") ? 1 : 3;
     if (m_extrasStack->getCol(0)->size() >= cards) {
@@ -197,6 +201,39 @@ void Game::moveExtraCard()
     }
 }
 
+void Game::handleCardClick()
+{
+    if (!m_selected && isSelectionAvailable()) {
+        m_selected = true;
+        m_selectedColumn = m_currentColumn;
+        m_selectedRow = m_currentRow;
+    }
+}
+
+bool Game::isSelectionAvailable()
+{
+    if (m_currentRow == 0) {
+        if (m_currentColumn <= EXTRAS_STACK_SIZE - 1) {
+            if (m_extrasStack->getCol(m_currentColumn)->size() == 0) {
+                return false;
+            }
+            return !m_extrasStack->getCol(m_currentColumn)->top().isHidden();
+        } else {
+            if (m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->size() == 0) {
+                return false;
+            }
+            return !m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->top().isHidden();
+        }
+    } else {
+        return !m_regularStack->getCol(m_currentColumn)->at(m_currentRow - 1).isHidden();
+    }
+}
+
+void Game::cancelSelection()
+{
+    m_selected = false;
+}
+
 void Game::cacheString(std::string text)
 {
     m_cachedOutput += text;
@@ -215,6 +252,9 @@ void Game::printExtrasStack(short row)
         if (m_currentRow == 0 && m_currentColumn == i) {
             releaseCache();
             printColoredText(COLOR_LIGHT_BLUE, cols[i]);
+        } else if (m_selected && m_selectedRow == 0 && m_selectedColumn == i) {
+            releaseCache();
+            printColoredText(COLOR_LIGHT_YELLOW, cols[i]);
         } else {
             if (m_extrasStack->getCol(i)->size() != 0) {
                 Card currentCard = m_extrasStack->getCol(i)->top();
@@ -240,6 +280,9 @@ void Game::printBuildStack(short row)
         if (m_currentRow == 0 && m_currentColumn - EXTRAS_STACK_SIZE == i) {
             releaseCache();
             printColoredText(COLOR_LIGHT_BLUE, cols[i]);
+        } else if (m_selected && m_selectedRow == 0 && m_selectedColumn - EXTRAS_STACK_SIZE == i) {
+            releaseCache();
+            printColoredText(COLOR_LIGHT_YELLOW, cols[i]);
         } else {
             if (m_buildStack->getCol(i)->size() != 0) {
                 Card currentCard = m_buildStack->getCol(i)->top();
@@ -265,11 +308,15 @@ void Game::printRegularStack(short row)
     string* cols = m_regularStack->getRow(row - topRows);
     for (short i = 0; i < REGULAR_STACK_SIZE; ++i) {
         short regularRow = m_currentRow - 1;
+        short regularSelectedRow = m_selectedRow - 1;
         short cardNumber = ((row - CARD_HEIGHT) / OUTSTANDING_CARD_HEIGHT);
         short size = m_regularStack->getCol(i)->size();
         if ((regularRow == cardNumber || (regularRow == (size - 1) && cardNumber >= size))  && m_currentColumn == i) {
             releaseCache();
             printColoredText(COLOR_LIGHT_BLUE, cols[i]);
+        } else if (m_selected && ((regularSelectedRow == cardNumber || (regularSelectedRow == (size - 1) && cardNumber >= size))  && m_selectedColumn == i)) {
+            releaseCache();
+            printColoredText(COLOR_LIGHT_YELLOW, cols[i]);
         } else {
             if (m_regularStack->getCol(i)->size() != 0) {
                 Card currentCard;

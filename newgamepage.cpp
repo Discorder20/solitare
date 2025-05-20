@@ -29,6 +29,8 @@ void NewGamePage::handleKey(char key)
         m_game.moveLeft();
     } else if (key == ENTER_KEY) {
         m_game.handleClick();
+    } else if (key == 'c') {
+        m_game.cancelSelection();
     }
 }
 

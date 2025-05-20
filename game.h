@@ -25,6 +25,7 @@ public:
     void moveRight();
     void handleClick();
     void moveExtraCard();
+    void cancelSelection();
 
 private:
     void cacheString(std::string text);
@@ -32,6 +33,8 @@ private:
     void printExtrasStack(short row);
     void printBuildStack(short row);
     void printRegularStack(short row);
+    void handleCardClick();
+    bool isSelectionAvailable();
 
 private:
     CardContainer* m_extrasStack;
@@ -43,6 +46,7 @@ private:
     int m_currentColumn;
     int m_selectedRow;
     int m_selectedColumn;
+    bool m_selected;
     std::string m_cachedOutput;
 };
 
