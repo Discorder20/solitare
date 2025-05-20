@@ -1,0 +1,24 @@
+{	
+	mode: hard / easy,
+	game_save: {
+		current_move: number,
+		moves: [{
+			move_number: number
+			from: 0 / 1 / 2,
+			from_row: number,
+			to: 0 / 1 / 2,
+			to_row: numer,
+			card: Card		
+		}],
+		extras_stack: [[Card]}],
+		build_stack: [[Card]}],
+		regular_stack: [[Card]}],
+	}	
+}
+
+Card: 
+{
+	value: number,
+	color: number,
+	hidden: bool
+}
