@@ -3,28 +3,28 @@
 
 using namespace std;
 
-CardContainer::CardContainer(short cols, CardStack *cardStacks[])
-    : cardStacks(cardStacks)
-    , cols(cols)
+CardContainer::CardContainer(short m_cols, CardStack *m_cardStacks[])
+    : m_cardStacks(m_cardStacks)
+    , m_cols(m_cols)
 {
 }
 
 CardContainer::~CardContainer()
 {
-    for(short i = 0; i < cols; i++)
+    for(short i = 0; i < m_cols; i++)
     {
-        delete cardStacks[i];
+        delete m_cardStacks[i];
     }
-    delete [] cardStacks;
+    delete [] m_cardStacks;
 }
 
 short CardContainer::rows()
 {
     short maxHeight = 0;
 
-    for(short i = 0; i < cols; i++)
+    for(short i = 0; i < m_cols; i++)
     {
-        short rows = cardStacks[i]->rows();
+        short rows = m_cardStacks[i]->rows();
         if (rows > maxHeight) {
             maxHeight = rows;
         }
@@ -35,13 +35,13 @@ short CardContainer::rows()
 
 std::string* CardContainer::getRow(short row)
 {
-    string* outputArray = new string[cols]; // it will be deleted in place where it's used;
-    for(short i = 0; i < cols; i++)
+    string* outputArray = new string[m_cols]; // it will be deleted in place where it's used;
+    for(short i = 0; i < m_cols; i++)
     {
         string output = "";
-        short rows = cardStacks[i]->rows();
+        short rows = m_cardStacks[i]->rows();
         if (row < rows) {
-            output = cardStacks[i]->getRow(row);
+            output = m_cardStacks[i]->getRow(row);
         } else {
             output.append(CARD_WIDTH, ' ');
         }
@@ -54,5 +54,5 @@ std::string* CardContainer::getRow(short row)
 
 CardStack *CardContainer::getCol(short col)
 {
-    return cardStacks[col];
+    return m_cardStacks[col];
 }

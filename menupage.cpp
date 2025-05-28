@@ -18,7 +18,7 @@ MenuPage::~MenuPage()
 
 void MenuPage::render()
 {
-    const string options[] = {"uruchom nową grę", "wczytaj ostatnią grę", "sterowanie", "ustawienia", "wyjdź z gry"};
+    const string options[] = {"uruchom nową grę", "wczytaj ostatnią grę", "tablica wyników", "sterowanie", "ustawienia", "wyjdź z gry"};
 
     cout << "Witaj w grze Pasjans\n" << endl;
     cout << "Poruszaj się po tym menu wykorzystując przyciski 'w','s' oraz 'Enter' \n" << endl;

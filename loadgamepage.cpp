@@ -1,19 +1,19 @@
-#include "newgamepage.h"
+#include "loadgamepage.h"
 #include "constants.h"
 
 #include "colors.h"
 
-NewGamePage::NewGamePage(JsonHandler &handler)
+LoadGamePage::LoadGamePage(JsonHandler &handler)
     : m_game(handler)
     , m_handler(handler)
 {
 }
 
-NewGamePage::~NewGamePage()
+LoadGamePage::~LoadGamePage()
 {
 }
 
-void NewGamePage::render()
+void LoadGamePage::render()
 {
     if (m_game.isGameWon()) {
         printColoredLine(COLOR_LIGHT_GREEN, "Wygrano grę !!!");
@@ -29,7 +29,7 @@ void NewGamePage::render()
     }
 }
 
-void NewGamePage::handleKey(char key)
+void LoadGamePage::handleKey(char key)
 {
     if (key == 'w') {
         m_game.moveTop();
@@ -48,7 +48,7 @@ void NewGamePage::handleKey(char key)
     }
 }
 
-void NewGamePage::start()
+void LoadGamePage::start()
 {
-    m_game.initializeGame();
+    m_game.loadGame();
 }

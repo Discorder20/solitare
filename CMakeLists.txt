@@ -24,6 +24,8 @@ add_executable(solitare main.cpp
     game.h game.cpp
     modepage.h modepage.cpp
     newgamepage.h newgamepage.cpp
+    loadgamepage.h loadgamepage.cpp
+    recordpage.h recordpage.cpp
 
 )
 target_link_libraries(solitare PRIVATE -static nlohmann_json)

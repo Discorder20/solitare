@@ -3,13 +3,18 @@
 	game_save: {
 		current_move: number,
 		moves: [{
-			move_number: number
-			from: 0 / 1 / 2,
-			from_row: number,
-			to: 0 / 1 / 2,
-			to_row: numer,
-			card: Card		
-		}],
+			"selectedRow": number,
+        		"selectedColumn": number,
+        		"currentRow": number,
+        		"currentColumn": number,
+        		"card": {
+         		 "color": number,
+          		 "hidden": number,
+          		 "value": number
+        		},
+        		"multiple": bool,
+        		"rows": number
+		}]
 		extras_stack: [[Card]}],
 		build_stack: [[Card]}],
 		regular_stack: [[Card]}],

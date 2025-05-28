@@ -26,6 +26,9 @@ public:
     void handleClick();
     void moveExtraCard();
     void cancelSelection();
+    bool isGameWon();
+    void cancelMove();
+    short getCurrentStep();
 
 private:
     void cacheString(std::string text);
@@ -34,7 +37,12 @@ private:
     void printBuildStack(short row);
     void printRegularStack(short row);
     void handleCardClick();
+    void handleSubmit();
+    CardStack* getSelectedStack();
     bool isSelectionAvailable();
+    void checkForWinning();
+    void registerMove(Card card, bool counted = true);
+    CardStack* getStack(short row, short column);
 
 private:
     CardContainer* m_extrasStack;
@@ -48,6 +56,8 @@ private:
     int m_selectedColumn;
     bool m_selected;
     std::string m_cachedOutput;
+    bool m_gameWon;
+    short m_currentStep;
 };
 
 #endif // GAME_H

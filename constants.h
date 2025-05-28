@@ -3,7 +3,7 @@
 
 #include <string>
 
-const int PAGES_COUNT = 6; // 5 pages + menu
+const int PAGES_COUNT = 7; // 6 pages + menu
 const int COLOR_BLACK = 0;
 const int COLOR_BLUE = 1;
 const int COLOR_GREEN = 2;
@@ -40,6 +40,9 @@ const int OUTSTANDING_CARD_STACK = 1;
 const int CARD_DECK_SIZE = 52;
 const int CARDS_FOR_REGULAR = 28; // card needed for regular stack;
 const int CARDS_FOR_EXTRA = 24;
+const int BOTTOM_SYMBOL = 0; // A
+const int TOP_SYMBOL = 12; // K
+const short MAX_STEPS_BACK = 3;
 const std::string UNKNOWN_CARD_SYMBOL = "?";
 const std::string JSON_FILE_NAME = "data.json";
 const std::string TOP_LEFT_CORNER = "╭";

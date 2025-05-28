@@ -14,8 +14,8 @@ public:
     CardStack* getCol(short col);
 
 private:
-    CardStack** cardStacks;
-    short cols;
+    CardStack** m_cardStacks;
+    short m_cols;
 };
 
 #endif // CARDCONTAINER_H

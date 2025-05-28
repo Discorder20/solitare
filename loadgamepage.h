@@ -1,14 +1,14 @@
-#ifndef NEWGAMEPAGE_H
-#define NEWGAMEPAGE_H
+#ifndef LOADGAMEPAGE_H
+#define LOADGAMEPAGE_H
 
 #include "game.h"
 #include "page.h"
 
-class NewGamePage : public Page
+class LoadGamePage : public Page
 {
 public:
-    NewGamePage(JsonHandler &handler);
-    ~NewGamePage();
+    LoadGamePage(JsonHandler &handler);
+    ~LoadGamePage();
 
     void render() override;
     void handleKey(char key) override;
@@ -19,4 +19,4 @@ private:
     JsonHandler &m_handler;
 };
 
-#endif // NEWGAMEPAGE_H
+#endif // LOADGAMEPAGE_H

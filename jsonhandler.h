@@ -3,8 +3,23 @@
 
 #include "card.h"
 #include "cardstack.h"
+#include "cardcontainer.h"
 
 #include <nlohmann/json.hpp>
+
+struct Record {
+    short moves;
+};
+
+struct Move {
+    short selectedRow;
+    short selectedColumn;
+    short currentRow;
+    short currentColumn;
+    Card card;
+    bool multiple;
+    short rows;
+};
 
 class JsonHandler
 {
@@ -12,13 +27,23 @@ public:
     JsonHandler();
     ~JsonHandler();
 
-    void saveMove(short from, short fromRow, short to, short toRow, Card card);
-    void moveCard(short from, short fromRow, short to, short toRow);
+    void saveMove(short selectedRow, short selectedColumn, short currentRow, short currentColumn, Card card, bool counted = true);
+    void moveMultipleCards(short selectedRow, short selectedColumn, short currentRow, short currentColumn, short rows);
     void addCard(short container, short row, Card card);
     void changeMode(std::string mode);
-    CardStack** getStacks(short container); // will be deleted in place where used
+    CardStack** getStacks(short container); // pointer will be deleted in place where used
     void clearJson();
     std::string getMode();
+    void clearFile();
+    void serializeCards(CardContainer *extrasStack, CardContainer *buildStack, CardContainer *regularStack);
+    short getMoves();
+    void addRecord(short moves);
+    short recordSize();
+    Record* getRecords();
+    Move popLastMove();
+    short getAvailableMoves();
+    void setCurrentStep(short step);
+    short getCurrentStep();
 
 private:
     bool fileExists();
