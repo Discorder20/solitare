@@ -26,7 +26,7 @@
 
 - **Regular Stack** – główny obszar gry, 7 kolumn, na których układane są karty w kolejności naprzemiennych kolorów malejąco.
 - **Build Stack** – 4 stosy docelowe, na które należy przenieść wszystkie karty danego koloru rosnąco (od Asa do Króla).
-- **Extras Stack** – stos kart do dobierania (stock) oraz stos kart odrzuconych (waste).
+- **Extras Stack** – stosy kart do dobierania (stock).
 
 ### Sterowanie
 
