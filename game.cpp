@@ -242,29 +242,30 @@ void Game::handleCardClick()
     }
 }
 
-void Game::handleSubmit()
+void Game::handleSubmit() // it's gonna be a hard one!!
 {
     if (m_currentColumn == m_selectedColumn && m_currentRow == m_selectedRow) {
         return ;
     }
 
     CardStack* selectedStack = getSelectedStack();
-    if (m_selectedRow > 0) {
-        if (m_currentRow == 0) {
-            if (m_currentColumn >= EXTRAS_STACK_SIZE ) {
+    if (m_selectedRow > 0) { // moving from regular stack
+        if (m_currentRow == 0) { // moving from regular stack to extras or build stack
+            if (m_currentColumn >= EXTRAS_STACK_SIZE ) { // moving to build stack
                 short currentValue = selectedStack->at(m_selectedRow - 1).getValue();
                 short currentColor = selectedStack->at(m_selectedRow - 1).getColor();
-                if (m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->isEmpty()) {
+                short buildColumn = m_currentColumn - EXTRAS_STACK_SIZE;
+                if (m_buildStack->getCol(buildColumn)->isEmpty()) {
                     if (currentValue == BOTTOM_SYMBOL) {
-                        m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->push(m_regularStack->getCol(m_selectedColumn)->top());
+                        m_buildStack->getCol(buildColumn)->push(m_regularStack->getCol(m_selectedColumn)->top());
                         registerMove(m_regularStack->getCol(m_selectedColumn)->top());
                         m_regularStack->getCol(m_selectedColumn)->pop();
                         if (m_regularStack->getCol(m_selectedColumn)->size() > 0) {
                             m_regularStack->getCol(m_selectedColumn)->top().show();
                         }
                     }
-                } else if (m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->top().getValue() == currentValue - 1 && currentColor == m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->top().getColor()) { // <
-                    m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->push(m_regularStack->getCol(m_selectedColumn)->top());
+                } else if (m_buildStack->getCol(buildColumn)->top().getValue() == currentValue - 1 && currentColor == m_buildStack->getCol(buildColumn)->top().getColor()) { // <
+                    m_buildStack->getCol(buildColumn)->push(m_regularStack->getCol(m_selectedColumn)->top());
                     registerMove(m_regularStack->getCol(m_selectedColumn)->top());
                     m_regularStack->getCol(m_selectedColumn)->pop();
                     if (m_regularStack->getCol(m_selectedColumn)->size() > 0) {
@@ -272,7 +273,7 @@ void Game::handleSubmit()
                     }
                 }
             }
-        } else {
+        } else { // moving from regular stack to regular stack
             short currentValue = selectedStack->at(m_selectedRow - 1).getValue();
             short currentColor = selectedStack->at(m_selectedRow - 1).getColor();
             if (m_regularStack->getCol(m_currentColumn)->isEmpty()) {
@@ -313,24 +314,25 @@ void Game::handleSubmit()
                 }
             }
         }
-    } else if (m_selectedColumn == 1) {
-        if (m_currentRow == 0) {
-            if (m_currentColumn >= EXTRAS_STACK_SIZE ) {
+    } else if (m_selectedColumn == 1) { // moving from extras stack
+        if (m_currentRow == 0) { // moving from extras stack to extras or build stack
+            if (m_currentColumn >= EXTRAS_STACK_SIZE ) { // moving from extras stack to build stack
                 short currentValue = selectedStack->top().getValue();
                 short currentColor = selectedStack->top().getColor();
-                if (m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->isEmpty()) {
+                short buildColumn = m_currentColumn - EXTRAS_STACK_SIZE;
+                if (m_buildStack->getCol(buildColumn)->isEmpty()) {
                     if (currentValue == BOTTOM_SYMBOL) {
-                        m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->push(m_extrasStack->getCol(m_selectedColumn)->top());
+                        m_buildStack->getCol(buildColumn)->push(m_extrasStack->getCol(m_selectedColumn)->top());
                         registerMove(m_extrasStack->getCol(1)->top());
                         m_extrasStack->getCol(1)->pop();
                     }
-                } else if (m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->top().getValue() == currentValue - 1 && currentColor == m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->top().getColor()) { // <
-                    m_buildStack->getCol(m_currentColumn - EXTRAS_STACK_SIZE)->push(m_extrasStack->getCol(m_selectedColumn)->top());
+                } else if (m_buildStack->getCol(buildColumn)->top().getValue() == currentValue - 1 && currentColor == m_buildStack->getCol(buildColumn)->top().getColor()) { // <
+                    m_buildStack->getCol(buildColumn)->push(m_extrasStack->getCol(m_selectedColumn)->top());
                     registerMove(m_extrasStack->getCol(1)->top());
                     m_extrasStack->getCol(1)->pop();
                 }
             }
-        } else {
+        } else { // moving from extras stack to regular stack
             short currentValue = selectedStack->top().getValue();
             short currentColor = selectedStack->top().getColor();
             if (m_regularStack->getCol(m_currentColumn)->isEmpty()) {
@@ -345,8 +347,8 @@ void Game::handleSubmit()
                 m_extrasStack->getCol(m_selectedColumn)->pop();
             }
         }
-    } else if (m_selectedColumn > 1) {
-        if (m_currentRow != 0) {
+    } else if (m_selectedColumn > 1) { // moving from build stack
+        if (m_currentRow != 0) { // moving from build stack to regular stack
             short currentValue = selectedStack->top().getValue();
             short currentColor = selectedStack->top().getColor();
             short buildStackColumn = m_selectedColumn - EXTRAS_STACK_SIZE;

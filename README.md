@@ -4,6 +4,9 @@
 
 **Pasjans (Gigathon 3 Edycja, 16-18)** to konsolowa gra karciana typu Solitaire napisana w języku C++. Gra umożliwia rozgrywkę w klasycznego pasjansa z obsługą zapisu, wczytywania, cofania ruchów oraz wyborem poziomu trudności. Interfejs oparty jest na sterowaniu klawiaturą, a całość działa w terminalu.
 
+Zarówno kod jak i komentarze są w języku angielskim.
+Ze względu na dużą ilość wypisywań do konsoli projekt polecam uruchomić pod powershell zamiast zwykłego CMD, znacząco poprawi to wydajność
+
 ### Główne funkcjonalności
 
 - Rozgrywka w klasycznego pasjansa (Solitaire)
